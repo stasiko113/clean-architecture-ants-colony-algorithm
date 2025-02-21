@@ -1,0 +1,35 @@
+{
+  "name": "untitled",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node -r tsconfig-paths/register src/presentation/main.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn src/presentation/main.ts",
+    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
+    "lint": "eslint 'src/**/*.ts' --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@types/node": "^22.13.4",
+    "eslint": "^9.20.1",
+    "eslint-plugin-boundaries": "^5.0.1",
+    "eslint-plugin-deprecation": "^3.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "globals": "^16.0.0",
+    "prettier": "^3.3.1",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.1"
+  },
+  "dependencies": {
+    "@types/pg": "^8.11.11",
+    "class-transformer": "^0.5.1",
+    "dotenv": "^16.4.7",
+    "inversify": "^6.2.2",
+    "pg": "^8.13.3",
+    "tsconfig-paths": "^4.2.0"
+  }
+}
