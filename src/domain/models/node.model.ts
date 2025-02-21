@@ -1,7 +1,4 @@
-import console from 'node:console';
-
 import { Expose, Type } from 'class-transformer';
-import { RouteService } from 'src/application/services/route.service';
 
 export class NodeModel {
   @Expose()
@@ -34,8 +31,6 @@ export class NodeModel {
       Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
       Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    console.log(RouteService);
 
     return R * c;
   }
