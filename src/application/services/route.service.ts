@@ -4,9 +4,9 @@ import { PathFindingAlgorithmInterface } from 'src/domain/interfaces/algorithms/
 import { EdgeRepositoryInterface } from 'src/domain/interfaces/repositories/edge-repository.interface';
 import { NodeRepositoryInterface } from 'src/domain/interfaces/repositories/node-repository.interface';
 import { RouteServiceInterface } from 'src/domain/interfaces/services/route-service.interface';
-import { EdgeModel } from 'src/domain/models/edge.model';
-import { GeoPointModel } from 'src/domain/models/geo-point.model';
-import { NodeModel } from 'src/domain/models/node.model';
+import { EdgeEntity } from 'src/domain/entities/edge.entity';
+import { GeoPointModel } from 'src/domain/entities/geo-point.model';
+import {NodeEntity} from "src/domain/entities/node.entity";
 
 @injectable()
 export class RouteService implements RouteServiceInterface {
@@ -16,11 +16,11 @@ export class RouteService implements RouteServiceInterface {
     private pathfindingAlgorithm: PathFindingAlgorithmInterface,
   ) {}
 
-  async getAllNodes(): Promise<NodeModel[]> {
+  async getAllNodes(): Promise<NodeEntity[]> {
     return this.nodeRepository.getAll();
   }
 
-  async getAllEdges(): Promise<EdgeModel[]> {
+  async getAllEdges(): Promise<EdgeEntity[]> {
     return this.edgeRepository.getAll();
   }
 
@@ -32,14 +32,14 @@ export class RouteService implements RouteServiceInterface {
     );
     const endNode = await this.nodeRepository.getNearestNode(latEnd, lonEnd);
 
-    const virtualStart = new NodeModel(0, latStart, lonStart);
-    const virtualEnd = new NodeModel(1, latEnd, lonEnd);
+    const virtualStart = new NodeEntity(0, latStart, lonStart);
+    const virtualEnd = new NodeEntity(1, latEnd, lonEnd);
 
     const edges = await this.edgeRepository.getAll();
-    const tempEdges: EdgeModel[] = [
+    const tempEdges: EdgeEntity[] = [
       ...edges,
-      EdgeModel.fromNodes(virtualStart, startNode),
-      EdgeModel.fromNodes(virtualEnd, endNode),
+      EdgeEntity.fromNodes(virtualStart, startNode),
+      EdgeEntity.fromNodes(virtualEnd, endNode),
     ];
 
     this.pathfindingAlgorithm.setGraph(tempEdges);

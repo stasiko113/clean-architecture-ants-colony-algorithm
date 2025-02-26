@@ -1,6 +1,6 @@
-import { EdgeModel } from 'src/domain/models/edge.model';
+import { EdgeEntity } from 'src/domain/entities/edge.entity';
 
 export interface PathFindingAlgorithmInterface {
   findShortestPath(start: number, end: number, iterations?: number): number[];
-  setGraph(edges: EdgeModel[]): void;
+  setGraph(edges: EdgeEntity[]): void;
 }

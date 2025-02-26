@@ -1,17 +1,17 @@
-import { plainToInstance } from 'class-transformer';
 import { Client } from 'pg';
 import { RepositoryInterface } from 'src/domain/interfaces/repositories/repository.interface';
+import {MapperProfileInterface} from "src/application/mappers/mapper-profile.interface";
 
-export class BaseRepository<T> implements RepositoryInterface<T> {
+export class BaseRepository<T, M> implements RepositoryInterface<T> {
   constructor(
     protected client: Client,
     private tableName: string,
-    private model: new (...args: any[]) => T,
+    protected _mapper: MapperProfileInterface<M, T>,
   ) {}
 
   async getAll(): Promise<T[]> {
     const result = await this.client.query(`SELECT * FROM ${this.tableName}`);
-    return plainToInstance(this.model, result.rows);
+    return this._mapper.toEntity(result.rows) as T[];
   }
 
   async getById(id: number): Promise<T | null> {
@@ -20,7 +20,7 @@ export class BaseRepository<T> implements RepositoryInterface<T> {
       [id],
     );
     return result.rows.length
-      ? plainToInstance(this.model, result.rows[0])
+      ? this._mapper.toEntity(result.rows[0]) as T
       : null;
   }
 
@@ -31,7 +31,7 @@ export class BaseRepository<T> implements RepositoryInterface<T> {
     const query = `INSERT INTO ${this.tableName} (${keys.join(', ')}) VALUES (${placeholders}) RETURNING *`;
 
     const result = await this.client.query(query, values);
-    return plainToInstance(this.model, result.rows[0]);
+    return this._mapper.toEntity(result.rows[0]) as T;
   }
 
   async update(id: number, entity: Partial<T>): Promise<T | null> {
@@ -41,13 +41,13 @@ export class BaseRepository<T> implements RepositoryInterface<T> {
       .map((key, index) => `${key} = $${index + 1}`)
       .join(', ');
 
-    if (keys.length === 0) return null; // Если нечего обновлять
+    if (keys.length === 0) return null;
 
     const query = `UPDATE ${this.tableName} SET ${setClause} WHERE id = $${keys.length + 1} RETURNING *`;
     const result = await this.client.query(query, [...values, id]);
 
     return result.rows.length
-      ? plainToInstance(this.model, result.rows[0])
+      ? this._mapper.toEntity(result.rows[0]) as T
       : null;
   }
 

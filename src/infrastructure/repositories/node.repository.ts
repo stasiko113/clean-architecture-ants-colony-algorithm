@@ -1,18 +1,19 @@
-import { plainToInstance } from 'class-transformer';
 import { Client } from 'pg';
 import { NodeRepositoryInterface } from 'src/domain/interfaces/repositories/node-repository.interface';
-import { NodeModel } from 'src/domain/models/node.model';
+import {NodeEntity} from 'src/domain/entities/node.entity';
 import { BaseRepository } from 'src/infrastructure/repositories/base.repository';
+import {NodeMapperProfile} from "src/application/mappers/node-mapper.profile";
+import {NodeModel} from "src/application/models/node.model";
 
 export class NodeRepository
-  extends BaseRepository<NodeModel>
+  extends BaseRepository<NodeEntity, NodeModel>
   implements NodeRepositoryInterface
 {
-  constructor(client: Client) {
-    super(client, 'edges', NodeModel);
+  constructor(client: Client, _mapper: NodeMapperProfile) {
+    super(client, 'edges', _mapper);
   }
 
-  async getNearestNode(lat: number, lon: number): Promise<NodeModel> {
+  async getNearestNode(lat: number, lon: number): Promise<NodeEntity> {
     const result = await this.client.query(
       `
             SELECT id, lat, lon FROM nodes
@@ -26,10 +27,10 @@ export class NodeRepository
       throw new Error('nodes not found');
     }
 
-    return plainToInstance(result.rows[0], NodeModel);
+    return this._mapper.toEntity(result.rows[0]) as NodeEntity;
   }
 
-  async getNodesByIds(nodeIds: number[]): Promise<NodeModel[]> {
+  async getNodesByIds(nodeIds: number[]): Promise<NodeEntity[]> {
     const result = await this.client.query(
       `
             SELECT id, lat, lon FROM nodes
@@ -38,6 +39,6 @@ export class NodeRepository
       [nodeIds],
     );
 
-    return plainToInstance(NodeModel, result.rows);
+    return this._mapper.toEntity(result.rows) as NodeEntity[];
   }
 }

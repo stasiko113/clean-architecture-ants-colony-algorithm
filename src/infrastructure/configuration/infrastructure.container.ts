@@ -5,6 +5,8 @@ import { ConfigServiceInterface } from 'src/domain/interfaces/services/config-se
 import DatabaseContext from 'src/infrastructure/database/database-context';
 import { EdgeRepository } from 'src/infrastructure/repositories/edge.repository';
 import { NodeRepository } from 'src/infrastructure/repositories/node.repository';
+import {NodeMapperProfile} from "src/application/mappers/node-mapper.profile";
+import {EdgeMapperProfile} from "src/application/mappers/edge-mapper.profile";
 
 export function registerInfrastructureDependencies(container: Container) {
   container
@@ -20,14 +22,16 @@ export function registerInfrastructureDependencies(container: Container) {
   container
     .bind<NodeRepositoryInterface>('NodeRepositoryInterface')
     .toDynamicValue((context) => {
-      const dbConn = context.container.get<DatabaseContext>(DatabaseContext);
-      return new NodeRepository(dbConn.getClient());
+	    const dbConn = context.container.get<DatabaseContext>(DatabaseContext);
+	    const mapper = context.container.get<NodeMapperProfile>('NodeMapperProfile');
+      return new NodeRepository(dbConn.getClient(), mapper);
     });
 
   container
     .bind<EdgeRepositoryInterface>('EdgeRepositoryInterface')
     .toDynamicValue((context) => {
       const dbConn = context.container.get<DatabaseContext>(DatabaseContext);
-      return new EdgeRepository(dbConn.getClient());
+	    const mapper = context.container.get<EdgeMapperProfile>('EdgeMapperProfile');
+	    return new EdgeRepository(dbConn.getClient(), mapper);
     });
 }

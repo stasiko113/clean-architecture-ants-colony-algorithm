@@ -1,5 +1,5 @@
 import { RepositoryInterface } from 'src/domain/interfaces/repositories/repository.interface';
-import { EdgeModel } from 'src/domain/models/edge.model';
+import { EdgeEntity } from 'src/domain/entities/edge.entity';
 
 export interface EdgeRepositoryInterface
-  extends RepositoryInterface<EdgeModel> {}
+  extends RepositoryInterface<EdgeEntity> {}

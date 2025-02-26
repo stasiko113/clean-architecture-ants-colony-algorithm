@@ -7,15 +7,25 @@ import { EdgeRepositoryInterface } from 'src/domain/interfaces/repositories/edge
 import { NodeRepositoryInterface } from 'src/domain/interfaces/repositories/node-repository.interface';
 import { ConfigServiceInterface } from 'src/domain/interfaces/services/config-service.interface';
 import { RouteServiceInterface } from 'src/domain/interfaces/services/route-service.interface';
+import {EdgeMapperProfile} from "src/application/mappers/edge-mapper.profile";
+import {NodeMapperProfile} from "src/application/mappers/node-mapper.profile";
 
 export function registerApplicationDependencies(container: Container) {
   container
     .bind<ConfigServiceInterface>('ConfigServiceInterface')
     .to(ConfigService);
 
-  container
-    .bind<PathFindingAlgorithmInterface>('PathFindingAlgorithmInterface')
-    .to(AntColonyAlgorithm);
+	container
+		.bind<NodeMapperProfile>('NodeMapperProfile')
+		.to(NodeMapperProfile);
+
+	container
+		.bind<EdgeMapperProfile>('EdgeMapperProfile')
+		.to(EdgeMapperProfile);
+
+	container
+		.bind<PathFindingAlgorithmInterface>('PathFindingAlgorithmInterface')
+		.to(AntColonyAlgorithm);
 
   container
     .bind<RouteServiceInterface>('RouteServiceInterface')

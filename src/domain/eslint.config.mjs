@@ -8,7 +8,7 @@ export default [
         rules: {
             "boundaries/element-types": [
                 "error",
-                { default: "disallow", rules: [] } // 🔥 Запрещаем `domain` импортировать что-либо
+                { default: "disallow", rules: [] }
             ]
         }
     }

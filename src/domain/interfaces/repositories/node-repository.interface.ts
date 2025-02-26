@@ -1,8 +1,8 @@
 import { RepositoryInterface } from 'src/domain/interfaces/repositories/repository.interface';
-import { NodeModel } from 'src/domain/models/node.model';
+import {NodeEntity} from "src/domain/entities/node.entity";
 
 export interface NodeRepositoryInterface
-  extends RepositoryInterface<NodeModel> {
-  getNearestNode(lat: number, lon: number): Promise<NodeModel>;
-  getNodesByIds(nodeIds: number[]): Promise<NodeModel[]>;
+  extends RepositoryInterface<NodeEntity> {
+  getNearestNode(lat: number, lon: number): Promise<NodeEntity>;
+  getNodesByIds(nodeIds: number[]): Promise<NodeEntity[]>;
 }

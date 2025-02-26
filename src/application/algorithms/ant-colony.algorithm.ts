@@ -1,7 +1,7 @@
 import * as console from 'node:console';
 
 import { PathFindingAlgorithmInterface } from 'src/domain/interfaces/algorithms/path-finding-algorithm.interface';
-import { EdgeModel } from 'src/domain/models/edge.model';
+import { EdgeEntity } from 'src/domain/entities/edge.entity';
 
 type Path = {
   neighbor: number;
@@ -16,7 +16,7 @@ export class AntColonyAlgorithm implements PathFindingAlgorithmInterface {
     this.graph = new Map();
   }
 
-  setGraph(edges: EdgeModel[]): void {
+  setGraph(edges: EdgeEntity[]): void {
     this.graph.clear();
 
     for (const edge of edges) {
