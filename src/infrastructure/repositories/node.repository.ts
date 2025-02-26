@@ -10,7 +10,7 @@ export class NodeRepository
   implements NodeRepositoryInterface
 {
   constructor(client: Client, _mapper: NodeMapperProfile) {
-    super(client, 'edges', _mapper);
+    super(client, 'nodes', _mapper);
   }
 
   async getNearestNode(lat: number, lon: number): Promise<NodeEntity> {

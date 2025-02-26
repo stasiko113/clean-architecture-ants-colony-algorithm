@@ -1,6 +1,7 @@
 import { MapperProfileInterface } from 'src/application/mappers/mapper-profile.interface';
 import { NodeModel } from 'src/application/models/node.model';
 import { NodeEntity } from 'src/domain/entities/node.entity';
+import * as console from "node:console";
 
 export class NodeMapperProfile
   implements MapperProfileInterface<NodeModel, NodeEntity>
@@ -21,6 +22,7 @@ export class NodeMapperProfile
     entityOrEntities: NodeEntity | NodeEntity[],
   ): NodeModel | NodeModel[] {
     if (Array.isArray(entityOrEntities)) {
+			console.log(entityOrEntities[10])
       return entityOrEntities.map((entity) =>
         this.mapSingleEntityToModel(entity),
       );

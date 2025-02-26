@@ -35,14 +35,15 @@ export class RouteService implements RouteServiceInterface {
     const virtualStart = new NodeEntity(0, latStart, lonStart);
     const virtualEnd = new NodeEntity(1, latEnd, lonEnd);
 
-    const edges = await this.edgeRepository.getAll();
-    const tempEdges: EdgeEntity[] = [
+    let edges: EdgeEntity[] = await this.edgeRepository.getAll();
+	  edges = [
       ...edges,
       EdgeEntity.fromNodes(virtualStart, startNode),
       EdgeEntity.fromNodes(virtualEnd, endNode),
     ];
 
-    this.pathfindingAlgorithm.setGraph(tempEdges);
+		const nodes = await this.nodeRepository.getAll();
+    this.pathfindingAlgorithm.setGraph(nodes, edges);
 
     return this.getCoordinatesForRoute(
       this.pathfindingAlgorithm.findShortestPath(startNode.id, endNode.id),

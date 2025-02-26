@@ -20,7 +20,6 @@ export async function up(client: Client): Promise<void> {
       start_node bigint NOT NULL REFERENCES nodes(id),
       end_node bigint NOT NULL REFERENCES nodes(id),
       distance DOUBLE PRECISION NOT NULL,
-      geom GEOMETRY(LineString, 4326) NOT NULL
     );
   `);
 }
