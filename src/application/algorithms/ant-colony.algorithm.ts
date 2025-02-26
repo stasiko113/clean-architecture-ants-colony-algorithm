@@ -1,7 +1,7 @@
 import * as console from 'node:console';
 
-import { PathFindingAlgorithmInterface } from 'src/domain/interfaces/algorithms/path-finding-algorithm.interface';
 import { EdgeEntity } from 'src/domain/entities/edge.entity';
+import { PathFindingAlgorithmInterface } from 'src/domain/interfaces/algorithms/path-finding-algorithm.interface';
 
 type Path = {
   neighbor: number;

@@ -1,12 +1,12 @@
 import { injectable } from 'inversify';
 import { RouteDto } from 'src/domain/dtos/route.dto';
+import { EdgeEntity } from 'src/domain/entities/edge.entity';
+import { GeoPointModel } from 'src/domain/entities/geo-point.model';
+import { NodeEntity } from 'src/domain/entities/node.entity';
 import { PathFindingAlgorithmInterface } from 'src/domain/interfaces/algorithms/path-finding-algorithm.interface';
 import { EdgeRepositoryInterface } from 'src/domain/interfaces/repositories/edge-repository.interface';
 import { NodeRepositoryInterface } from 'src/domain/interfaces/repositories/node-repository.interface';
 import { RouteServiceInterface } from 'src/domain/interfaces/services/route-service.interface';
-import { EdgeEntity } from 'src/domain/entities/edge.entity';
-import { GeoPointModel } from 'src/domain/entities/geo-point.model';
-import {NodeEntity} from "src/domain/entities/node.entity";
 
 @injectable()
 export class RouteService implements RouteServiceInterface {

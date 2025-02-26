@@ -1,9 +1,9 @@
 import { Client } from 'pg';
+import { NodeMapperProfile } from 'src/application/mappers/node-mapper.profile';
+import { NodeModel } from 'src/application/models/node.model';
+import { NodeEntity } from 'src/domain/entities/node.entity';
 import { NodeRepositoryInterface } from 'src/domain/interfaces/repositories/node-repository.interface';
-import {NodeEntity} from 'src/domain/entities/node.entity';
 import { BaseRepository } from 'src/infrastructure/repositories/base.repository';
-import {NodeMapperProfile} from "src/application/mappers/node-mapper.profile";
-import {NodeModel} from "src/application/models/node.model";
 
 export class NodeRepository
   extends BaseRepository<NodeEntity, NodeModel>

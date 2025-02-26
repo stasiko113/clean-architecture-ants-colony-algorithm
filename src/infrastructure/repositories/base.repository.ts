@@ -1,6 +1,6 @@
 import { Client } from 'pg';
+import { MapperProfileInterface } from 'src/application/mappers/mapper-profile.interface';
 import { RepositoryInterface } from 'src/domain/interfaces/repositories/repository.interface';
-import {MapperProfileInterface} from "src/application/mappers/mapper-profile.interface";
 
 export class BaseRepository<T, M> implements RepositoryInterface<T> {
   constructor(
@@ -20,7 +20,7 @@ export class BaseRepository<T, M> implements RepositoryInterface<T> {
       [id],
     );
     return result.rows.length
-      ? this._mapper.toEntity(result.rows[0]) as T
+      ? (this._mapper.toEntity(result.rows[0]) as T)
       : null;
   }
 
@@ -47,7 +47,7 @@ export class BaseRepository<T, M> implements RepositoryInterface<T> {
     const result = await this.client.query(query, [...values, id]);
 
     return result.rows.length
-      ? this._mapper.toEntity(result.rows[0]) as T
+      ? (this._mapper.toEntity(result.rows[0]) as T)
       : null;
   }
 
